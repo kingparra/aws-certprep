@@ -156,5 +156,6 @@ Outputs:
   ProdEC2InstanceId:
     Description: The instance ID of the ProdEC2Instance
     Value: !Ref ProdEC2Instance
+    # View this with $ aws cloudformation list-exports
     Export:
       Name: !Sub "${AWS::StackName}-ProdEC2InstanceId"
