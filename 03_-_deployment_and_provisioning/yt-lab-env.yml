@@ -151,3 +151,10 @@ Resources:
               VolumeType: "gp2"
               DeleteOnTermination: "false"
               VolumeSize: "20"
+
+Outputs:
+  ProdEC2InstanceId:
+    Description: The instance ID of the ProdEC2Instance
+    Value: !Ref ProdEC2Instance
+    Export:
+      Name: !Sub "${AWS::StackName}-ProdEC2InstanceId"
