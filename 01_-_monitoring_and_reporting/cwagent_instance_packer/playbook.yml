@@ -1,0 +1,35 @@
+---
+- name: Set up static site server with apache and files
+  hosts: all
+  become: true
+  tasks:
+
+    - name: Ping the image server
+      ansible.builtin.ping:
+
+    - name: Set up apache
+      block:
+      - name: Install apache server
+        ansible.builtin.yum:
+          name: httpd
+          state: present
+      - name: Start and enable apache server
+        ansible.builtin.systemd:
+          name: httpd
+          enabled: true
+          state: started
+
+    - name: Install CloudWatch unified agent for Amazon Linux 2
+      # https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/install-CloudWatch-Agent-on-EC2-Instance.html
+      ansible.builtin.yum:
+        name: amazon-cloudwatch-agent
+        state: present
+
+    - name: Set up a cron job to push a custom metric with HTTP status codes every minute
+      block:
+
+        - name: Create the script to push the metric
+
+        - name: Add a cron job to trigger the script every minute
+
+        - name: Test that the job will trigger

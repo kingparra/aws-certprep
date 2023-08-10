@@ -125,7 +125,7 @@ Resources:
     Properties:
       ImageId: !FindInMap [AMImapping, !Ref "AWS::Region", "test"]
       KeyName: "precision"
-      InstanceType: !Ref DevInstanceTypeParam
+      InstanceType: t2.small
       SubnetId: !Ref EnvSubnet
       SecurityGroupIds:
         - !Ref DevSecurityGroup
@@ -152,10 +152,11 @@ Resources:
               DeleteOnTermination: "false"
               VolumeSize: "20"
 
+
 Outputs:
+
   ProdEC2InstanceId:
     Description: The instance ID of the ProdEC2Instance
     Value: !Ref ProdEC2Instance
-    # View this with $ aws cloudformation list-exports
     Export:
       Name: !Sub "${AWS::StackName}-ProdEC2InstanceId"

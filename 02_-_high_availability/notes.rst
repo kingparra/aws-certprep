@@ -406,3 +406,84 @@ Tables, items, and attributes are the core components.
 
 DynamoDB supports two different kinds of primary keys:
 partition key and partition and sort key.
+
+
+CloudFront
+----------
+CloudFront is a content delivery network, or CDN.
+
+It improves read performance by caching content at the
+edge of the network, close to the client.
+
+There are 230+ points of presence globally (218+ edge
+locations and 12 regional edge caches)
+
+DDoS protection, integration with shield, web application framework.
+
+Can expose external HTTPS and can talk to internal HTTPS back-ends.
+
+CloudFront - Origins
+^^^^^^^^^^^^^^^^^^^^
+S3 bucket:
+
+* For distributing files and caching them at the edge.
+* Enhanced security with CloudFront Origin Access Identity (OAI).
+* CloudFront can be used as an ingress (to upload files to S3).
+
+Custom origin (HTTP):
+
+* Application load balancer
+* EC2 instance
+* S3 website
+* Any HTTP backend you want
+
+**What is OAI, and how can I use it to restrict access to files?**
+
+
+CloudFront Geo Restriction
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+You can restrict who can access your distribution:
+* Whitelist: Allow users only from approved countries
+* Blacklist: Prevent access from disapproved countries
+
+The country is determined using a 3rd party geo-IP database.
+
+Use case: Copyright Laws to control access to content.
+
+CloudFront Access Logs
+^^^^^^^^^^^^^^^^^^^^^^
+CloudFront access logs: logs every request made to CloudFront into a logging S3 bucket.
+
+CloudFront Reports
+^^^^^^^^^^^^^^^^^^
+It's possible to generate reports on **cache statistics**, **popular objects**, **top referrers**,
+**usage**, and **viewers**.
+
+* Cache statistics report: Total requests, percentage of viewer requests by result type, bytes
+  transferred to viewers, HTTPD status codes, percentage of GET requests that did not finish
+  downloading.
+* Popular objects report: Lists the 50 most popular objects and stats about them, including the
+  number of hits and misses, the hit ratio, the number of bytes served for misses, the total bytes
+  served, the number of incomplete downloads and the number of requests by HTTP status code.
+* Top referrers report: The CloudFront top referrers report includes the top 25 referrers, the
+  number of requests from a referrer, and the number of requests from a referrer as a percentage of
+  the total number of request during the specified period.
+* Usage reports: number of requests, data transferred by protocol and data transferred by
+  destination.
+* Viewers report: devices, browsers, OSs, locations.
+
+CloudFront - Good to know
+^^^^^^^^^^^^^^^^^^^^^^^^^
+* You can configure min TTL, default TTL, and max TTL, which controls how long objects are cached at the edge.
+* Some web apps use URL query strings to send info to the origin. You can rewrite these with
+  CloudFront.
+* CloudFront signed cookies allow you to control who can access your content.
+* You can configure CloudFront to add custom headers to the requests that it sends to your origin.
+
+THINGS TO REMEMBER
+------------------
+"single digit millisecond response time" --> DynamoDB
+
+Aurora has six read replicas across three AZs.
+
+"millions of requests per second" --> network load balancer

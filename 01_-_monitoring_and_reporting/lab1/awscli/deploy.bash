@@ -59,6 +59,7 @@ aws logs test-metric-filter \
   --log-event-messages "$test_log_events"
 
 
+# DOC "Evaluating an alarm" https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html
 # 5. Create an alarm using the custom metric filter you just created.
 aws cloudwatch put-metric-alarm \
   --namespace yt-instance-http-5xx-metric \

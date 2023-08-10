@@ -178,15 +178,27 @@ Components of a CloudWatch alarm:
 
 * Metric: The thing we're measuring.
 * Thresholds: Point at which we want a notification or action.
-* Period: Length of time in seconds to evaluate the metric.
-* Action: Changes the state of the alarm and then a notification is sent to Auto Scaling, EC2
-  Actions, or SNS notifications.
+* Period: Length of time in seconds to evaluate the
+  metric to create each individual data point for an
+  alarm.
+* Evaluation periods: The number of most recent
+  periods, or data points, to evaluate when determining
+  alarm state.
+* Datapoints to alarm: is the number of data points
+  within the Evaluation Periods that must be breaching
+  to cause the alarm to go to the ``ALARM`` state. The
+  breaching data points don't have to be consecutive,
+  but they must all be within the last number of data
+  pints equal to Evaluation Period.
+* Action: What to do when the alarm changes state.
 
 CloudWatch alarm states:
 
-* OK: within threshold
-* INSUFFICIENT_DATA: metric not available, alarm started. Not enough data for the metric to determine the alarm state.
-* ALARM: metric outside the defined threshold.
+* ``OK``: within threshold
+* ``INSUFFICIENT_DATA``: metric not available, alarm
+  started. Not enough data for the metric to determine
+  the alarm state.
+* ``ALARM``: metric outside the defined threshold.
 
 Things to consider about alarms
 
@@ -216,3 +228,12 @@ functions or streams.
 * Rules: route matching events to targets.
 * Target: The service that will react to the event. Can be more than one target.
 
+
+ELB Monitoring
+--------------
+Default monitoring: 5 minutes
+Detailed monitoring: 60 seconds
+
+How do you get a list of all of the ip addresses
+connected to a load balances? Check the ELB access
+logs.
