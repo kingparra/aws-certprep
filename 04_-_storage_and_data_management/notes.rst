@@ -104,3 +104,65 @@ S3 Encryption in flight
 S3 exposes endpoints using either HTTP or HTTPS.
 So, TLS encrypts data in flight.
 For SSE-C, HTTPS is required.
+
+
+S3 MFA Delete
+-------------
+MFA delete forces a user to generate a code on a MFA
+device before doing important operations on S3.
+To use MFA delete enable versioning on the bucket.
+
+You will need MFA to permanently delete an object
+version or suspend versioning on the bucket.
+
+You won't need MFA for enabling versioning or listing
+deleted versions.
+
+Only the bucket owner can enable or disable MFA delete.
+
+MFA delete can currently only be enabled using the CLI.
+
+
+S3 Access Logs
+--------------
+You might want to enable server access logging, which
+tracks requests for access to your bucket.
+
+Each access log record provides details about a single
+access request, such as the requester, bucket name,
+request time, request action, response status, and
+error code, if any.
+
+To set this up, you need a target bucket. The target
+bucket must not have any retention settings configured.
+
+S3 uses a special log delivery account to write server
+access logs. Be sure to update the bucket policy to
+allow ``s3:PutObject`` from ``logging.s3.amazonaws.com``.
+
+Docs: https://docs.aws.amazon.com/AmazonS3/latest/userguide/ServerLogs.html
+
+
+S3 Replication
+--------------
+There are two types of replication for S3: Cross Region
+Replication (CRR) and Same Region Replication (SRR).
+
+CRR use cases: compliance, lower latency access,
+replication across accounts.
+
+SRR use cases: log aggregation, live replication
+between production and test accounts.
+
+Buckets can life in different accounts. Copying is
+asynchronous. You must give IAM permissions to S3.
+
+After activating, only new objects are replicated (not
+retroactive).
+
+For delete operations:
+
+* If you delete without a version ID, it adds a delete marker, which is not replicated.
+* If you delete with a version ID, it deletes in the source, not replicated.
+
+You cannot "chain" replication, from bucket A to B to C, for example.
