@@ -1,11 +1,25 @@
 Route 53
-********
+--------
 Route 53 is a highly-available fully managed DNS service.
 
-Why send a high TTL? To reduce the number of lookups, reducing traffic.
+You can use Route 53 to perform three main functions:
 
-Zone files
-----------
+1. Register domain names.
+2. Route internet traffic to the resources for your domain.
+3. Check the health of your resources.
+
+Resource record sets
+^^^^^^^^^^^^^^^^^^^^
+DNS information is stored in records. Records have 5 parts.
+
+* name
+* type
+* value (the domain name)
+* TTL
+* class (always set to IN, for internet)
+
+Type
+^^^^
 
 +-------------+-----------------------------+
 | Record Type |  Purpose                    |
@@ -27,6 +41,16 @@ It has advanced features such as DNS based client load balancing.
 When do you use a CNAME vs an alias?
 Use a CNAME only for non-root domains (subdomains, etc.)
 Alias works for root domain and non-root domains.
+
+CNAME vs Alias
+^^^^^^^^^^^^^^
+CNAME: Hostname to hostname. Only for non-root domain.
+
+Alias: Hostname to resource. Works for root and non-root domains. Native health check.
+
+TTL
+^^^
+Why send a high TTL? To reduce the number of lookups, reducing traffic.
 
 
 Routing policies
@@ -68,6 +92,27 @@ Geoproximity routing policy
 This type of policy lets Route 53 route traffic to your resources based on geographic location of
 your users and resources. You can assign a bias to a resource, which will cause more or less traffic
 to be routed to it. In order to use this type of routing policy, you must use Route 53 traffic flow.
+
+Multi-value routing policy
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+Use this when routing traffic to multiple resources.
+Up to 8 healthy records are returned for each multi-value query.
+Multi-value is not a substitute for having an ELB.
+
+
+Route 53 Health Checks
+----------------------
+x checks failed ==> unhealthy
+x checks passed ==> healthy
+
+The default check interval is 30 seconds. You can set it to 10 seconds at a higher cost.
+About 15 health checkers will check the endpoint health. One request every 2 seconds on average.
+
+You can have HTTP, TCP, and HTTPS health checks (no SSL verification).
+
+You can integrate the health check with CloudWatch.
+
+Health checks can be linked to Route53 DNS queries.
 
 
 VPC
